@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+
+    <link rel="stylesheet" href="/css/index.css" />
+  </head>
+  <body>
+    <div class="auth">
+      <form id="register">
+        <input
+          type="email"
+          placeholder="Enter your email"
+          name="email"
+          id="email-input"
+        />
+        <input
+          type="password"
+          placeholder="Enter your password"
+          name="password"
+          id="password-input"
+        />
+        <input type="submit" id="registerSubmit" />
+        <p>Having problems signing in?</p>
+        <button
+          id="resetPassword"
+          title="resetPassword"
+          type="button"
+        >
+          Reset Password
+        </button>
+      </form>
+      <form id="login">
+        <input
+          type="email"
+          placeholder="Enter your email"
+          name="email"
+          id="login-email-input"
+        />
+        <input
+          type="password"
+          placeholder="Enter your password"
+          name="password"
+          id="login-password-input"
+        />
+        <input type="submit" id="loginSubmit" />
+      </form>
+    </div>
+
+    <div class="content">
+      <h1>Welcome to an empty page</h1>
+      <h2>Deal with it 😀</h2>
+      <button id="logoutBTN" >Logout</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script defer type="module" src="/js/index.js"></script>
+    <script defer type="module" src="/js/firebase.js"></script>
+  </body>
+</html>
