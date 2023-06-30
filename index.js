@@ -9,7 +9,6 @@ let loginEmail = document.getElementById('login-email-input').value;
 let loginPassword = document.getElementById('login-password-input').value;
 let resetPasswordBTN = document.getElementById('resetPassword');
 let logoutBTN = document.getElementById('logoutBTN');
-let resetPasswordEmail = document.getElementById('resetPassword-input').value;
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
@@ -25,7 +24,6 @@ firebase.auth().onAuthStateChanged((user) => {
 
 registerForm.addEventListener('submit', register);
 loginForm.addEventListener('submit', login);
-resetPasswordBTN.addEventListener('submit', resetPassword);
 logoutBTN.addEventListener('click', logout);
 
 
@@ -70,18 +68,6 @@ function logout() {
     });
 }
 
-function resetPassword(e) {
-  e.preventDefault()
-  auth
-    .sendPasswordResetEmail(resetPasswordEmail)
-    .then(() => {
-      alert('Password reset email sent');
-    })
-    .catch((err) => {
-      alert('Error sending password reset email');
-      console.log(err);
-    });
-}
 
 // function emailVerification() {
 //   auth
