@@ -47,6 +47,7 @@ function registerUser(e) {
     .then(function (user) {
       alert('Registered Successfully');
       console.log(user);
+      user.emailVerified = false;
       registerForm.reset();
       loginForm.reset();
     })
@@ -109,6 +110,5 @@ function checkEmailVerification() {
     console.log("User is email verified");
     verifyBTN.style.display = 'none';
   } else {
-    return false
   }
 }
