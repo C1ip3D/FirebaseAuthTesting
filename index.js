@@ -6,6 +6,10 @@ let registerForm = document.getElementById('register');
 let loginForm = document.getElementById('login');
 let signoutBTN = document.getElementById('SignOut');
 let verifyBTN = document.getElementById('verify');
+let alertHTML = document.getElementById('alertHTML');
+let alert = document.getElementsByClassName('alert')[0];
+let contentAlertHTML = document.getElementById('contentAlertHTML');
+alert.style.width = authContainer.style.width;
 
 //Event Listeners
 registerForm.addEventListener('submit', registerUser);
@@ -18,12 +22,11 @@ verifyBTN.addEventListener('click', EmailVerifcation);
 auth.onAuthStateChanged(function (user) {
   if (user) {
     authContainer.style.display = 'none';
-    content.style.display = 'block';
-    checkEmailVerification()
+    content.style.display = 'grid';
+    checkEmailVerification();
   } else {
     authContainer.style.display = 'block';
     content.style.display = 'none';
-
   }
 });
 
@@ -45,15 +48,55 @@ function registerUser(e) {
   auth
     .createUserWithEmailAndPassword(registerEmail, confirmPassword)
     .then(function (user) {
-      alert('Registered Successfully');
       console.log(user);
-      user.emailVerified = false;
-      registerForm.reset();
-      loginForm.reset();
     })
     .catch(function (error) {
-      alert('Error');
-      console.log(error);
+      if (error.code == 'auth/weak-password') {
+        console.log(error);
+        alertHTML.innerHTML = `<h1 id="alertHTML">Password is too weak! <br>Enter a password with at least 6 characters</h1>`;
+        alertHTML.style.fontSize = '1rem';
+        alertHTML.style.color = 'black';
+        alertHTML.style.textAlign = 'center';
+        alert.classList.add('animate');
+        registerForm.reset();
+        loginForm.reset();
+        setTimeout(function () {
+          alert.classList.remove('animate');
+        }, 3000);
+      } else if (error.code == 'auth/email-already-in-use') {
+        alertHTML.innerHTML = `<h1 id="alertHTML">Email already in use!</h1>`;
+        alertHTML.style.fontSize = '1rem';
+        alertHTML.style.color = 'black';
+        alertHTML.style.textAlign = 'center';
+        alert.classList.add('animate');
+        registerForm.reset();
+        loginForm.reset();
+        setTimeout(function () {
+          alert.classList.remove('animate');
+        }, 3000);
+      } else if (error.code == 'auth/invalid-email') {
+        alertHTML.innerHTML = `<h1 id="alertHTML">Invalid Email</h1>`;
+        alertHTML.style.fontSize = '1rem';
+        alertHTML.style.color = 'black';
+        alertHTML.style.textAlign = 'center';
+        alert.classList.add('animate');
+        registerForm.reset();
+        loginForm.reset();
+        setTimeout(function () {
+          alert.classList.remove('animate');
+        }, 3000);
+      } else {
+        alertHTML.innerHTML = `<h1 id="alertHTML">An unknown error has occured</h1>`;
+        alertHTML.style.fontSize = '1rem';
+        alertHTML.style.color = 'black';
+        alertHTML.style.textAlign = 'center';
+        alert.classList.add('animate');
+        registerForm.reset();
+        loginForm.reset();
+        setTimeout(function () {
+          alert.classList.remove('animate');
+        }, 3000);
+      }
     });
 }
 
@@ -66,14 +109,54 @@ function loginUser(e) {
   auth
     .signInWithEmailAndPassword(loginEmail, loginPassword)
     .then(function (user) {
-      alert('Logged In Successfully');
       console.log(user);
-      loginForm.reset();
-      registerForm.reset();
     })
     .catch(function (error) {
-      alert('Error');
-      console.log(error);
+      if (error.code == 'auth/wrong-password') {
+        alertHTML.innerHTML = `<h1 id="alertHTML">Incorrect Password</h1>`;
+        alertHTML.style.fontSize = '1rem';
+        alertHTML.style.color = 'black';
+        alertHTML.style.textAlign = 'center';
+        alert.classList.add('animate');
+        registerForm.reset();
+        loginForm.reset();
+        setTimeout(function () {
+          alert.classList.remove('animate');
+        }, 3000);
+      } else if (error.code == 'auth/user-not-found') {
+        alertHTML.innerHTML = `<h1 id="alertHTML">User not found</h1>`;
+        alertHTML.style.fontSize = '1rem';
+        alertHTML.style.color = 'black';
+        alertHTML.style.textAlign = 'center';
+        alert.classList.add('animate');
+        registerForm.reset();
+        loginForm.reset();
+        setTimeout(function () {
+          alert.classList.remove('animate');
+        }, 3000);
+      } else if (error.code == 'auth/invalid-email') {
+        alertHTML.innerHTML = `<h1 id="alertHTML">Invalid Email</h1>`;
+        alertHTML.style.fontSize = '1rem';
+        alertHTML.style.color = 'black';
+        alertHTML.style.textAlign = 'center';
+        alert.classList.add('animate');
+        registerForm.reset();
+        loginForm.reset();
+        setTimeout(function () {
+          alert.classList.remove('animate');
+        }, 3000);
+      } else {
+        alertHTML.innerHTML = `<h1 id="alertHTML">An unknown error has occured</h1>`;
+        alertHTML.style.fontSize = '1rem';
+        alertHTML.style.color = 'black';
+        alertHTML.style.textAlign = 'center';
+        alert.classList.add('animate');
+        registerForm.reset();
+        loginForm.reset();
+        setTimeout(function () {
+          alert.classList.remove('animate');
+        }, 3000);
+      }
     });
 }
 
@@ -81,13 +164,19 @@ function signOut() {
   auth
     .signOut()
     .then(function () {
-      alert('Signed Out');
-      registerForm.reset();
-      loginForm.reset();
+      return;
     })
     .catch(function (error) {
-      alert('Error singing out');
-      console.log(error);
+      alertHTML.innerHTML = `<h1 id="alertHTML">Error signing out</h1>`;
+      alertHTML.style.fontSize = '1rem';
+      alertHTML.style.color = 'black';
+      alertHTML.style.textAlign = 'center';
+      alert.classList.add('animate');
+      registerForm.reset();
+      loginForm.reset();
+      setTimeout(function () {
+        alert.classList.remove('animate');
+      }, 3000);
     });
 }
 
@@ -96,10 +185,28 @@ function EmailVerifcation() {
   user
     .sendEmailVerification()
     .then(function () {
-      alert('Email Verification Sent');
+      alertHTML.innerHTML = `<h1 id="alertHTML">Email verification sent</h1>`;
+      alertHTML.style.fontSize = '1rem';
+      alertHTML.style.color = 'black';
+      alertHTML.style.textAlign = 'center';
+      alert.classList.add('animate');
+      registerForm.reset();
+      loginForm.reset();
+      setTimeout(function () {
+        alert.classList.remove('animate');
+      }, 3000);
     })
     .catch(function (error) {
-      alert('Error sending verifcation email');
+      alertHTML.innerHTML = `<h1 id="alertHTML">An unknown error has occured</h1>`;
+      alertHTML.style.fontSize = '1rem';
+      alertHTML.style.color = 'black';
+      alertHTML.style.textAlign = 'center';
+      alert.classList.add('animate');
+      registerForm.reset();
+      loginForm.reset();
+      setTimeout(function () {
+        alert.classList.remove('animate');
+      }, 3000);
       console.log(error);
     });
 }
@@ -107,7 +214,7 @@ function EmailVerifcation() {
 function checkEmailVerification() {
   let user = auth.currentUser;
   if (user && user.emailVerified) {
-    console.log("User is email verified");
+    console.log('User is email verified');
     verifyBTN.style.display = 'none';
   } else {
   }
