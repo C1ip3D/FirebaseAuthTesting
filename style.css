@@ -9,6 +9,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: antiquewhite;
+  text-align: center;
 }
 
 .auth {
@@ -46,7 +47,13 @@ a {
   display: none;
 }
 
-#SignOut {
+.content h1 {
+  font-size: 3rem;
+  font-family: 'Share Tech Mono', sans-serif;
+}
+
+#SignOut, #verify {
+  gap: 20px;
   font-size: 1.5rem;
   border-radius: 1.2rem;
   padding: 10px;

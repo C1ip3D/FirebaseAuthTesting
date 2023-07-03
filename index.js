@@ -2,15 +2,16 @@ import auth from './db.js';
 
 let authContainer = document.getElementsByClassName('auth')[0];
 let content = document.getElementsByClassName('content')[0];
-let user = auth.currentUser;
 let registerForm = document.getElementById('register');
 let loginForm = document.getElementById('login');
 let signoutBTN = document.getElementById('SignOut');
+let verifyBTN = document.getElementById('verify');
 
 //Event Listeners
 registerForm.addEventListener('submit', registerUser);
 loginForm.addEventListener('submit', loginUser);
 signoutBTN.addEventListener('click', signOut);
+verifyBTN.addEventListener('click', EmailVerifcation);
 
 //User signed in?
 
@@ -18,9 +19,11 @@ auth.onAuthStateChanged(function (user) {
   if (user) {
     authContainer.style.display = 'none';
     content.style.display = 'block';
+    checkEmailVerification()
   } else {
     authContainer.style.display = 'block';
     content.style.display = 'none';
+
   }
 });
 
@@ -85,4 +88,27 @@ function signOut() {
       alert('Error singing out');
       console.log(error);
     });
+}
+
+function EmailVerifcation() {
+  let user = auth.currentUser;
+  user
+    .sendEmailVerification()
+    .then(function () {
+      alert('Email Verification Sent');
+    })
+    .catch(function (error) {
+      alert('Error sending verifcation email');
+      console.log(error);
+    });
+}
+
+function checkEmailVerification() {
+  let user = auth.currentUser;
+  if (user && user.emailVerified) {
+    console.log("User is email verified");
+    verifyBTN.style.display = 'none';
+  } else {
+    return false
+  }
 }
